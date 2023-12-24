@@ -1,0 +1,11 @@
+# Build the Docker image
+docker build -t stackoverflow .
+
+# Run the Docker image
+docker run stackoverflow
+
+# Compiling the application
+gcc -o stackoverflow stackoverflow.c
+
+# Run the application
+./stackoverflow

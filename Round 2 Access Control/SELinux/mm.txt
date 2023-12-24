@@ -1,0 +1,27 @@
+policy_module(password_manager, 1.0)
+
+require {
+    type unconfined_t;
+    class file { read };
+}
+
+# Define the new type for the password manager
+type password_manager_exec_t;
+files_type(password_manager_exec_t)
+
+# Define the new type for the password file
+type password_file_t;
+files_type(password_file_t)
+
+# Allow the password manager to read the password file
+allow password_manager_exec_t password_file_t:file read;
+
+# Deny all other domains access to the password file
+dontaudit unconfined_t password_file_t:file read;
+
+
+
+allow shell_t mc_exec: file execute; 
+allow password_manager_t password_manager_exec_t: file entrypoint; 
+allow shell_t mc_t: process transition; 
+type_transition shell_t mc_exec: process mc_t; 

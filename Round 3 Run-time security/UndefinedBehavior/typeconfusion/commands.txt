@@ -1,0 +1,11 @@
+# Build the Docker image
+docker build -t typeconfusion .
+
+# Run the Docker image
+docker run typeconfusion
+
+# Compiling the application
+gcc -o typeconfusion typeconfusion.c
+
+# Run the application
+./typeconfusion

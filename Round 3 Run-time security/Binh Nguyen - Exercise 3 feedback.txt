@@ -1,0 +1,58 @@
+====================================================
+= Platform Security, Exercise 3: Run-time security =
+====================================================
+
+1. Undefined behaviour
+
+  a)  1 [2 point]
+-1:   Answer to the question: Can we conclude that undefined behaviour
+      leads to insecurity. No we cannot, gnereally. But it is dangereos
+      as you point out.
+
+  b) 2 [2 point]
+
+
+  c) 1.5 [2 point]
+
+-0.5: Formal proofs do provide proof of refinement w.r.t. to 
+      the properties being proved. Problems arise from the prover not
+      catching all necessary proof requirements, or possible manual 
+      translation from final refinement to code.
+
+2. Triggering undefined behaviour
+
+  a) 4 [4 point]
+
+
+  b) 0 [4 point]
+
+    -4: This is implementation defined behavior and not undefined behavior.
+        It did not cause data corruption or a crash.
+        Check the linked C99 standard §6.3.2.3 paragraph 5
+
+
+3. Address space layout randomization
+
+  a) 0 [5 points]
+
+     -5: No response given.  The idea was to do something like this:
+
+         uint64_t array[1];
+         void(*p)() = normal_function;
+         scanf("%lu %lu", &array[0], &array[1]);
+
+  b) 3 [5 points]
+
+     -2: You were close.  Exactly what the problem was depends on how the compiler laid things out, but the basic issue was that you were overwriting the frame record rather than the function pointer.
+         One possibility is that the compiler decided to put fp lower on the stack, which would be solved by switching the order of the two definitions.  This would always be the case if it decided not to allocate the memory for fp until you reached that part of the code (essentially, that is, it waits until after the printf to expand the stack frame by moving SP down).   Both of these would have been solved by moving the definition of fp up, either before buffer[] or before gets(), depending on how the compiler chooses to lay out the stack.
+
+         Either way, you assigned to fp after the gets(), so there was a good chance that this assignment would have overwritten your changes even if you were writing to the right place.  This isn't guaranteed to occur, since the compiler is can reorder the second assignment to come before the gets() call without affecting the [defined] behaviour of the program.
+
+  c  i) 1 [1 points]
+
+
+  c ii) 0 [5 points]
+
+    -5: No response given.
+
+        The idea was that you leak a pointer to any function other than attack, then find the difference between the addresses of the two functions in the binary using nm or objdump, add it to the leaked pointer, and feed it into the program.

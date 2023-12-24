@@ -1,0 +1,58 @@
+=============================================
+= Platform Security, Exercise 1: Sandboxing =
+=============================================
+
+1. Process sandboxing
+
+  a) 2 [2 points]
+
+     Good!
+
+  b) 2 [2 points]
+
+
+
+  c i) 2 [2 points]
+
+
+
+  c ii) 2 [2 points]
+
+
+
+  c iii) 2 [2 points]
+
+
+
+2. VMs vs. containers
+
+  a) 2 [2 points]
+
+
+
+  b i) 0.5 [1 point]
+
+    -0.5: In a trap-and-emulate virtual machine, the application code is interpreted
+          directly by the CPU.  In a dynamic recompilation-based VM, the code
+          is indeed interpreted by the VMM (which will translate it into instructions that
+          can run without needing to be trapped, though this wasn't clear from your answer.
+
+
+  b ii) 1 [1 point]
+
+
+
+  b iii) 0 [1 point]
+
+    -1: In a container system, the application runs directly on the CPU.  The
+    kernel uses namespaces/control groups to sandbox the application, but doesn't
+    need to interpret the application code directly.
+
+
+3. Practical exercise
+
+  dockerfile) 14 [15 points]
+
+    -1: The FROM command sets the base image, so the second FROM doesn't
+        add Python to the Ubuntu image, but switches to a new image that
+        contains Python (usually Debian).
